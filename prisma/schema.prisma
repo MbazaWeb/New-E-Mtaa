@@ -1,0 +1,308 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Region {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  code      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+}
+
+model District {
+  id        String   @id @default(uuid()) @db.Uuid
+  regionId  String?  @db.Uuid @map("region_id")
+  name      String
+  code      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+}
+
+model Ward {
+  id        String   @id @default(uuid()) @db.Uuid
+  districtId String? @db.Uuid @map("district_id")
+  name      String
+  code      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+}
+
+model Mtaa {
+  id      String   @id @default(uuid()) @db.Uuid
+  wardId  String?  @db.Uuid @map("ward_id")
+  name    String
+  code    String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+}
+
+model OfficeRegistry {
+  id               String   @id @default(uuid()) @db.Uuid
+  office_id        String   @unique
+  office_code      String   @unique
+  office_type      String
+  region_id        String?  @db.Uuid
+  district_id      String?  @db.Uuid
+  ward_id          String?  @db.Uuid
+  mtaa_id          String?  @db.Uuid
+  department_category String?
+  department_scope String?
+  parent_office_id String?  @db.Uuid
+  office_name      String
+  office_name_sw   String?
+  physical_address String?
+  phone            String?
+  email            String?
+  latitude         Float?
+  longitude        Float?
+  status           String   @default("ACTIVE")
+  street_mappings  String[]
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+
+  @@map("office_registry")
+}
+
+model Profile {
+  id        String   @id @default(uuid()) @db.Uuid
+  user_id   String?  @db.Uuid
+  first_name String?
+  middle_name String?
+  last_name  String?
+  date_of_birth DateTime?
+  phone_number String?
+  international_phone String?
+  email     String?
+  passport_number String?
+  assigned_office_id String? @db.Uuid
+  identity_verified Boolean @default(false)
+  passport_verified Boolean @default(false)
+  email_verified Boolean @default(false)
+  user_type String @default("local")
+  diaspora  Boolean @default(false)
+  country_of_residence String?
+  city_of_residence String?
+  profile_completion_percentage Int @default(0)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("profiles")
+}
+
+model ServiceCatalog {
+  id String @id @default(uuid()) @db.Uuid
+  service_code String @unique
+  service_name String
+  service_name_sw String
+  category String
+  form_fields Json @default("[]")
+  required_documents Json @default("[]")
+  prerequisite_services Json @default("[]")
+  min_profile_completion Int @default(30)
+  identity_verification_required Boolean @default(false)
+  is_free Boolean @default(true)
+  fee_amount Float @default(0)
+  allow_appeal Boolean @default(true)
+  cooling_off_hours Int @default(24)
+  available_to_diaspora Boolean @default(true)
+  is_active Boolean @default(true)
+  version Int @default(1)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("service_catalog")
+}
+
+model ServiceWorkflowStage {
+  id String @id @default(uuid()) @db.Uuid
+  service_id String @db.Uuid
+  stage_order Int
+  stage_name String
+  stage_name_sw String
+  responsible_office_type String
+  department_category String?
+  mandatory_actions Json @default("[]")
+  available_actions Json @default("[]")
+  auto_advance Boolean @default(false)
+  stage_sla_minutes Int?
+  created_at DateTime @default(now())
+
+  @@unique([service_id, stage_order])
+  @@map("service_workflow_stages")
+}
+
+model SLAConfiguration {
+  id String @id @default(uuid()) @db.Uuid
+  service_id String @db.Uuid
+  target_value Int
+  target_unit String
+  warning_threshold Int @default(75)
+  pause_on_citizen_request Boolean @default(true)
+  pause_on_external_input Boolean @default(true)
+  auto_escalate_on_breach Boolean @default(false)
+  notify_supervisor_on_breach Boolean @default(true)
+  is_active Boolean @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("sla_configurations")
+}
+
+model Application {
+  id String @id @default(uuid()) @db.Uuid
+  reference_number String @unique
+  citizen_id String @db.Uuid
+  service_id String @db.Uuid
+  current_stage_id String? @db.Uuid
+  current_office_id String? @db.Uuid
+  status String @default("DRAFT")
+  form_data Json @default("{}")
+  uploaded_documents Json @default("[]")
+  checklist_completed Boolean @default(false)
+  sla_target DateTime?
+  sla_paused_until DateTime?
+  sla_status String @default("PENDING")
+  fee_amount Float @default(0)
+  fee_waived Boolean @default(false)
+  fee_waiver_reason String?
+  citizen_type String @default("local")
+  submitted_at DateTime?
+  completed_at DateTime?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("applications")
+}
+
+model ApplicationStageLog {
+  id String @id @default(uuid()) @db.Uuid
+  application_id String @db.Uuid
+  from_stage_id String? @db.Uuid
+  to_stage_id String? @db.Uuid
+  changed_by String? @db.Uuid
+  comment String?
+  action_taken Json @default("[]")
+  created_at DateTime @default(now())
+
+  @@map("application_stage_logs")
+}
+
+model ApplicationEscalation {
+  id String @id @default(uuid()) @db.Uuid
+  application_id String @db.Uuid
+  from_office_id String? @db.Uuid
+  to_office_id String? @db.Uuid
+  reason String?
+  escalated_by String? @db.Uuid
+  created_at DateTime @default(now())
+
+  @@map("application_escalations")
+}
+
+model Document {
+  id String @id @default(uuid()) @db.Uuid
+  document_uuid String @default(uuid())
+  reference_number String @unique
+  application_id String? @db.Uuid
+  citizen_id String @db.Uuid
+  document_type String
+  document_data Json?
+  file_url String
+  file_hash String?
+  qr_code_data String?
+  digital_signature String?
+  status String @default("ACTIVE")
+  issue_date DateTime @default(now())
+  expiry_date DateTime?
+  revoked_at DateTime?
+  revoked_by String? @db.Uuid
+  revocation_reason String?
+  created_at DateTime @default(now())
+
+  @@map("documents")
+}
+
+model DocumentQrScan {
+  id String @id @default(uuid()) @db.Uuid
+  document_id String? @db.Uuid
+  scanned_at DateTime @default(now())
+  scanner_ip String?
+  scanner_user_agent String?
+  scan_result String?
+  scan_location Json?
+
+  @@map("document_qr_scans")
+}
+
+model Payment {
+  id String @id @default(uuid()) @db.Uuid
+  reference_number String @unique
+  application_id String? @db.Uuid
+  citizen_id String? @db.Uuid
+  amount Float
+  provider String?
+  provider_reference String?
+  status String @default("PENDING")
+  metadata Json?
+  created_at DateTime @default(now())
+
+  @@map("payments")
+}
+
+model Complaint {
+  id String @id @default(uuid()) @db.Uuid
+  reference_number String @unique
+  citizen_id String? @db.Uuid
+  subject String?
+  body String?
+  status String @default("OPEN")
+  assigned_office_id String? @db.Uuid
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("complaints")
+}
+
+model StaffRole {
+  id String @id @default(uuid()) @db.Uuid
+  name String
+  description String?
+  permissions Json @default("[]")
+  created_at DateTime @default(now())
+
+  @@map("staff_roles")
+}
+
+model StaffAccount {
+  id String @id @default(uuid()) @db.Uuid
+  user_id String? @db.Uuid
+  office_id String? @db.Uuid
+  role_id String? @db.Uuid
+  is_active Boolean @default(true)
+  created_at DateTime @default(now())
+
+  @@map("staff_accounts")
+}
+
+model SystemSetting {
+  key String @id
+  value Json
+  updated_at DateTime @default(now())
+
+  @@map("system_settings")
+}
+
+model AuditLog {
+  id String @id @default(uuid()) @db.Uuid
+  actor_id String?
+  actor_role String?
+  action String?
+  target_table String?
+  target_id String? @db.Uuid
+  details Json?
+  created_at DateTime @default(now())
+
+  @@map("audit_logs")
+}

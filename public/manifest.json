@@ -1,0 +1,44 @@
+{
+  "name": "E-Serikali Mtaa",
+  "short_name": "E-MTAA",
+  "description": "Mfumo wa Huduma za Serikali za Mtaa Tanzania",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#059669",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "sw",
+  "icons": [
+    {
+      "src": "https://images.seeklogo.com/logo-png/31/1/coat-of-arms-of-tanzania-logo-png_seeklogo-311608.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://images.seeklogo.com/logo-png/31/1/coat-of-arms-of-tanzania-logo-png_seeklogo-311608.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["government", "productivity"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Omba Huduma",
+      "short_name": "Omba",
+      "description": "Omba huduma mpya",
+      "url": "/#services",
+      "icons": [{ "src": "https://images.seeklogo.com/logo-png/31/1/coat-of-arms-of-tanzania-logo-png_seeklogo-311608.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Maombi Yangu",
+      "short_name": "Maombi",
+      "description": "Angalia maombi yako",
+      "url": "/#applications",
+      "icons": [{ "src": "https://images.seeklogo.com/logo-png/31/1/coat-of-arms-of-tanzania-logo-png_seeklogo-311608.png", "sizes": "96x96" }]
+    }
+  ]
+}

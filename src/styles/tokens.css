@@ -1,0 +1,66 @@
+/* Design tokens for E-MTAA V3.0 (do NOT modify protected files) */
+:root {
+  /* Fonts */
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Plus Jakarta Sans", sans-serif;
+  --font-serif: "Playfair Display", serif;
+
+  /* Colors (HSL) */
+  --color-background: hsl(150 10% 97%);
+  --color-foreground: hsl(160 30% 8%);
+  --color-primary: hsl(152 60% 28%);
+  --color-primary-foreground: hsl(0 0% 100%);
+  --color-secondary: hsl(210 65% 42%);
+  --color-secondary-foreground: hsl(0 0% 100%);
+  --color-accent: hsl(42 90% 55%);
+  --color-accent-foreground: hsl(42 90% 12%);
+  --color-tz-green: hsl(152 60% 28%);
+  --color-tz-blue: hsl(210 65% 42%);
+  --color-tz-gold: hsl(42 90% 55%);
+  --color-border: hsl(150 5% 85%);
+  --color-destructive: hsl(0 84% 60%);
+  --color-ring: hsl(152 60% 28%);
+
+  /* Radii */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+
+  /* Animations */
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.6s ease-out forwards;
+  --animate-fade-in: fade-in 0.5s ease-out forwards;
+  --animate-slide-in: slide-in 0.3s ease-out forwards;
+  --animate-pulse-slow: pulse-slow 3s ease-in-out infinite;
+}
+
+/* Utility classes that mirror visual behavior (optional helpers) */
+.glass-card {
+  background-color: rgb(255 255 255 / 70%);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgb(255 255 255 / 30%);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-lg);
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-secondary-foreground);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-lg);
+  font-weight: 500;
+  transition: all 0.2s;
+}

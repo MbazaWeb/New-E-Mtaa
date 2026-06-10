@@ -1,0 +1,382 @@
+{
+  "info": {
+    "name": "E-MTAA Phase 2 - Office Registry API",
+    "description": "Complete test collection for Office Registry API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Create Mtaa Office",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"office_type\": \"MTAA_OFFICE\",\n  \"office_name\": \"Mchikichini Mtaa Office\",\n  \"office_name_sw\": \"Ofisi ya Mtaa wa Mchikichini\",\n  \"region_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"district_id\": \"550e8400-e29b-41d4-a716-446655440001\",\n  \"ward_id\": \"550e8400-e29b-41d4-a716-446655440002\",\n  \"mtaa_id\": \"550e8400-e29b-41d4-a716-446655440003\",\n  \"mtaa_name\": \"Mchikichini\",\n  \"physical_address\": \"Plot 123, Main Street\",\n  \"phone\": \"+255 654 123456\",\n  \"email\": \"mchikichini@example.com\",\n  \"latitude\": \"-6.8024\",\n  \"longitude\": \"39.2720\",\n  \"street_mappings\": [\"Main Street\", \"Second Avenue\", \"Third Lane\"]\n}\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/api/offices",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "offices"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "2. List All Offices",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4000/api/offices",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "offices"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "3. List Mtaa Offices Only",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4000/api/offices?office_type=MTAA_OFFICE&status=ACTIVE",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "offices"
+          ],
+          "query": [
+            {
+              "key": "office_type",
+              "value": "MTAA_OFFICE"
+            },
+            {
+              "key": "status",
+              "value": "ACTIVE"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4. Get Office by ID (UUID)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4000/api/offices/550e8400-e29b-41d4-a716-446655440003",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "offices",
+            "550e8400-e29b-41d4-a716-446655440003"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "5. Get Office by office_id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4000/api/offices/DSM-ILA-KAR-Mchikichini-001",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "offices",
+            "DSM-ILA-KAR-Mchikichini-001"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. Update Office Details",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"office_name\": \"Updated Mchikichini Office\",\n  \"phone\": \"+255 654 999999\",\n  \"email\": \"updated@example.com\"\n}\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/api/offices/DSM-ILA-KAR-Mchikichini-001",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "offices",
+            "DSM-ILA-KAR-Mchikichini-001"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7. Map Streets to Office",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"streets\": [\"Makunganya Street\", \"Kariakoo Avenue\", \"Msimbazi Street\"]\n}\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/api/offices/street-mapping/DSM-ILA-KAR-Mchikichini-001",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "offices",
+            "street-mapping",
+            "DSM-ILA-KAR-Mchikichini-001"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "8. Resolve Street to Office",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"street\": \"Main Street\"\n}\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/api/offices/resolve-street",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "offices",
+            "resolve-street"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "9. Bulk Import Offices",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rows\": [\n    {\n      \"office_type\": \"MTAA_OFFICE\",\n      \"office_name\": \"Kariakoo Mtaa Office\",\n      \"office_name_sw\": \"Ofisi ya Mtaa wa Kariakoo\",\n      \"region_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"district_id\": \"550e8400-e29b-41d4-a716-446655440001\",\n      \"ward_id\": \"550e8400-e29b-41d4-a716-446655440002\",\n      \"mtaa_id\": \"550e8400-e29b-41d4-a716-446655440004\",\n      \"mtaa_name\": \"Kariakoo\",\n      \"street_mappings\": [\"Kariakoo Avenue\", \"Pamba Street\"]\n    },\n    {\n      \"office_type\": \"MTAA_OFFICE\",\n      \"office_name\": \"Darajani Mtaa Office\",\n      \"office_name_sw\": \"Ofisi ya Mtaa wa Darajani\",\n      \"region_id\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"district_id\": \"550e8400-e29b-41d4-a716-446655440001\",\n      \"ward_id\": \"550e8400-e29b-41d4-a716-446655440002\",\n      \"mtaa_id\": \"550e8400-e29b-41d4-a716-446655440005\",\n      \"mtaa_name\": \"Darajani\",\n      \"street_mappings\": [\"Darajani Road\", \"Market Street\"]\n    }\n  ]\n}\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/api/offices/bulk-import",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "offices",
+            "bulk-import"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "10. Get Office Hierarchy",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4000/api/offices/hierarchy/550e8400-e29b-41d4-a716-446655440000",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "offices",
+            "hierarchy",
+            "550e8400-e29b-41d4-a716-446655440000"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "11. Delete Office (Deactivate)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:4000/api/offices/DSM-ILA-KAR-Mchikichini-001",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "offices",
+            "DSM-ILA-KAR-Mchikichini-001"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ERROR: Invalid Office Type",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"office_type\": \"INVALID_TYPE\",\n  \"office_name\": \"Test Office\"\n}\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/api/offices",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "offices"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ERROR: Missing Office Name",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"office_type\": \"MTAA_OFFICE\"\n}\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/api/offices",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "offices"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ERROR: Invalid Email",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"not-an-email\"\n}\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/api/offices/DSM-ILA-KAR-Mchikichini-001",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "api",
+            "offices",
+            "DSM-ILA-KAR-Mchikichini-001"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
